@@ -92,24 +92,30 @@
 
 ; check if author is in the author set
 (defn has-author? [book author]
-  (contains? book author))
-  ;(print author))
-  
+  (contains? (:authors book) author))  
 
+; (authors [cities, wild-seed])    ;=> #{china, octavia}
 (defn authors [books]
-  :-)
+  (apply clojure.set/union (map :authors books)))
 
+; gets book, uses authors to get authors
 (defn all-author-names [books]
-  :-)
+  (set (map :name (authors books))))
 
 (defn all-authors-to-set [books]
   :-)
 
 (defn author->string [author]
-  :-)
+  (let [
+        name (:name author) 
+        deathyear (:death-year author) 
+        birthyear (:birth-year author)]
+    (cond 
+      (contains? author :birth-year) (str name " (" birthyear " - " deathyear ")")
+      :else (str name))))
 
 (defn authors->string [authors]
-  :-)
+  (apply str (map author->string authors)))
 
 (defn book->string [book]
   :-)
